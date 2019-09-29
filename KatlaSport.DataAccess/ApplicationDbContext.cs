@@ -17,7 +17,7 @@ namespace KatlaSport.DataAccess
         /// Initializes a new instance of the <see cref="ApplicationDbContext"/> class.
         /// </summary>
         public ApplicationDbContext()
-            : base("DefaultConnection")
+            : base("AzureConnection")
         {
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<ApplicationDbContext, Configuration>(true));
 
