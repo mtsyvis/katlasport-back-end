@@ -15,7 +15,7 @@ namespace KatlaSport.DataAccess.OrderCatalogue
             HasRequired(i => i.Product).WithMany(i => i.Orders).HasForeignKey(i => i.ProductId);
             Property(i => i.Id).HasColumnName("order_id").HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
             Property(i => i.OrderDate).HasColumnName("order_date").IsRequired();
-            Property(i => i.Description).HasColumnName("order_description");
+            Property(i => i.Description).HasColumnName("order_description").HasMaxLength(300);
             Property(i => i.CustomerId).HasColumnName("order_customer_id");
             Property(i => i.ManagerId).HasColumnName("order_manager_id");
             Property(i => i.StatusId).HasColumnName("order_status_id");
