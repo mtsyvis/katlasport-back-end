@@ -15,7 +15,12 @@ namespace KatlaSport.DataAccess
             builder.RegisterType<ProductStore.ProductStoreContext>().As<ProductStore.IProductStoreContext>().InstancePerRequest();
             builder.RegisterType<CustomerCatalogue.CustomerContext>().As<CustomerCatalogue.ICustomerContext>().InstancePerRequest();
             builder.RegisterType<DebugDatabaseLogger>().As<IDatabaseLogger>();
-            //builder.RegisterType<OrderCatalogue.Order>().As<>()
+            builder.RegisterType<OrderCatalogue.OrderCatalogueContext>().As<OrderCatalogue.IOrderCatalogueContext>().InstancePerRequest();
+            //builder.RegisterType<OrderCatalogue.OrderStatus>().As<OrderCatalogue.IOrderCatalogueContext>()
+            //    .InstancePerRequest();
+
+            builder.RegisterType<ManagerCatalogue.IManagerContext>().As<ManagerCatalogue.IManagerContext>()
+                .InstancePerRequest();
         }
     }
 }

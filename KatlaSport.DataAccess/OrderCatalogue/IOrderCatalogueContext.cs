@@ -3,7 +3,7 @@
     /// <summary>
     /// Represents a context for order catalogue domain.
     /// </summary>
-    public interface IOrderCatalogue
+    public interface IOrderCatalogueContext
     {
         /// <summary>
         /// Gets the orders.

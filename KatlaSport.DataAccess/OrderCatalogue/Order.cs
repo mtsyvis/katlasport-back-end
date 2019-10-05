@@ -19,6 +19,14 @@ namespace KatlaSport.DataAccess.OrderCatalogue
         public int Id { get; set; }
 
         /// <summary>
+        /// Gets or sets the product amount.
+        /// </summary>
+        /// <value>
+        /// The product amount.
+        /// </value>
+        public int ProductAmount { get; set; }
+
+        /// <summary>
         /// Gets or sets the order date.
         /// </summary>
         /// <value>

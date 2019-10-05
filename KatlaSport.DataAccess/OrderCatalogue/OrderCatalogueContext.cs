@@ -1,6 +1,6 @@
 ﻿namespace KatlaSport.DataAccess.OrderCatalogue
 {
-    internal sealed class OrderCatalogueContext : DomainContextBase<ApplicationDbContext>, IOrderCatalogue
+    internal sealed class OrderCatalogueContext : DomainContextBase<ApplicationDbContext>, IOrderCatalogueContext
     {
         public OrderCatalogueContext(ApplicationDbContext dbContext)
             : base(dbContext)
