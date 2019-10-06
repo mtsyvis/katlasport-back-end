@@ -42,6 +42,6 @@ namespace KatlaSport.DataAccess.ProductStore
         /// </summary>
         public int Quantity { get; set; }
 
-        public virtual ICollection<Order> Orders { get; set; }
+        public virtual ICollection<OrderProductItem> Orders { get; set; }
     }
 }

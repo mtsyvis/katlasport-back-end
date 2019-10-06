@@ -1,10 +1,11 @@
 ﻿using System;
 using KatlaSport.DataAccess.CustomerCatalogue;
 using KatlaSport.DataAccess.ManagerCatalogue;
-using KatlaSport.DataAccess.ProductStore;
 
 namespace KatlaSport.DataAccess.OrderCatalogue
 {
+    using System.Collections.Generic;
+
     /// <summary>
     /// Represents a order.
     /// </summary>
@@ -17,14 +18,6 @@ namespace KatlaSport.DataAccess.OrderCatalogue
         /// The identifier.
         /// </value>
         public int Id { get; set; }
-
-        /// <summary>
-        /// Gets or sets the product amount.
-        /// </summary>
-        /// <value>
-        /// The product amount.
-        /// </value>
-        public int ProductAmount { get; set; }
 
         /// <summary>
         /// Gets or sets the order date.
@@ -75,14 +68,6 @@ namespace KatlaSport.DataAccess.OrderCatalogue
         public int ManagerId { get; set; }
 
         /// <summary>
-        /// Gets or sets the product identifier.
-        /// </summary>
-        /// <value>
-        /// The product identifier.
-        /// </value>
-        public int ProductId { get; set; }
-
-        /// <summary>
         /// Gets or sets the status.
         /// </summary>
         /// <value>
@@ -104,7 +89,7 @@ namespace KatlaSport.DataAccess.OrderCatalogue
         /// <value>
         /// The product.
         /// </value>
-        public virtual StoreItem Product { get; set; }
+        public virtual ICollection<OrderProductItem> Products { get; set; }
 
         /// <summary>
         /// Gets or sets the customer.

@@ -16,14 +16,6 @@ namespace KatlaSport.Services.OrderManagement
         public int Id { get; set; }
 
         /// <summary>
-        /// Gets or sets the product amount.
-        /// </summary>
-        /// <value>
-        /// The product amount.
-        /// </value>
-        public int ProductAmount { get; set; }
-
-        /// <summary>
         /// Gets or sets the description.
         /// </summary>
         /// <value>
@@ -70,13 +62,5 @@ namespace KatlaSport.Services.OrderManagement
         /// The manager identifier.
         /// </value>
         public int ManagerId { get; set; }
-
-        /// <summary>
-        /// Gets or sets the product identifier.
-        /// </summary>
-        /// <value>
-        /// The product identifier.
-        /// </value>
-        public int ProductId { get; set; }
     }
 }

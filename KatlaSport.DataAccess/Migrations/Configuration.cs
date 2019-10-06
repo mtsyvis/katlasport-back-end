@@ -421,7 +421,7 @@ namespace KatlaSport.DataAccess.Migrations
                         CustomerId = 1,
                         ManagerId = managerId,
                         OrderDate = timestamp,
-                        ProductId = 1,
+                        //ProductId = 1,
                         StatusId = 1,
                         Description = "Good item"
                     },
@@ -431,7 +431,7 @@ namespace KatlaSport.DataAccess.Migrations
                         CustomerId = 1,
                         ManagerId = managerId,
                         OrderDate = timestamp,
-                        ProductId = 2,
+                        //ProductId = 2,
                         StatusId = 1
                     },
                 new Order()
@@ -440,9 +440,16 @@ namespace KatlaSport.DataAccess.Migrations
                         CustomerId = 3,
                         ManagerId = managerId,
                         OrderDate = timestamp,
-                        ProductId = 4,
+                        //ProductId = 4,
                         StatusId = 1
                     });
+
+            context.OrderProductItems.AddOrUpdate(
+                i => new { i.OrderId, i.ItemId },
+                new OrderProductItem() { OrderId = 1, ItemId = 1, Amount = 1 },
+                new OrderProductItem() { OrderId = 2, ItemId = 2, Amount = 1 },
+                new OrderProductItem() { OrderId = 2, ItemId = 1, Amount = 2 },
+                new OrderProductItem() { OrderId = 3, ItemId = 3, Amount = 2 });
         }
     }
 }

@@ -97,6 +97,14 @@ namespace KatlaSport.DataAccess
         public DbSet<OrderStatus> OrderStatuses { get; set; }
 
         /// <summary>
+        /// Gets or sets the order product items.
+        /// </summary>
+        /// <value>
+        /// The order product items.
+        /// </value>
+        public DbSet<OrderProductItem> OrderProductItems { get; set; }
+
+        /// <summary>
         /// Overrides base method.
         /// </summary>
         /// <param name="modelBuilder"><see cref="DbModelBuilder"/>.</param>

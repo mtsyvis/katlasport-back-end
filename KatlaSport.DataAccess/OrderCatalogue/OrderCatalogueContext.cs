@@ -10,5 +10,7 @@
         public IEntitySet<Order> Orders => GetDbSet<Order>();
 
         public IEntitySet<OrderStatus> OrderStatuses => GetDbSet<OrderStatus>();
+
+        public IEntitySet<OrderProductItem> OrderProductItems => GetDbSet<OrderProductItem>();
     }
 }

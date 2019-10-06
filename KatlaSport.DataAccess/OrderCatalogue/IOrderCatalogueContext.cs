@@ -3,6 +3,7 @@
     /// <summary>
     /// Represents a context for order catalogue domain.
     /// </summary>
+    /// <seealso cref="KatlaSport.DataAccess.IAsyncEntityStorage" />
     public interface IOrderCatalogueContext : IAsyncEntityStorage
     {
         /// <summary>
@@ -20,5 +21,13 @@
         /// The order statuses.
         /// </value>
         IEntitySet<OrderStatus> OrderStatuses { get; }
+
+        /// <summary>
+        /// Gets the order product items.
+        /// </summary>
+        /// <value>
+        /// The order product items.
+        /// </value>
+        IEntitySet<OrderProductItem> OrderProductItems { get; }
     }
 }

@@ -38,7 +38,7 @@
             foreach (var order in orders)
             {
                 order.OrderStatus = _orderCatalogueContext.OrderStatuses.FirstOrDefault(o => o.Id == order.StatusId).Name;
-                order.ProductName = _productStoreContext.Items.FirstOrDefault(i => i.ProductId == order.ProductId).Product.Name;
+                //order.ProductName = _productStoreContext.Items.FirstOrDefault(i => i.ProductId == order.ProductId).Product.Name;
             }
 
             return orders;
@@ -47,10 +47,11 @@
         public async Task<Order> CreateOrderAsync(UpdateOrderRequest createRequest)
         {
             var dbOrder = Mapper.Map<UpdateOrderRequest, KatlaSport.DataAccess.OrderCatalogue.Order>(createRequest);
-            dbOrder.CustomerId = 1; // Need to change
-            dbOrder.ManagerId = 2; // Need to change
-            dbOrder.TotalCost = dbOrder.ProductAmount * _productStoreContext.Items
-                                    .FirstOrDefault(i => i.Product.Id == dbOrder.ProductId).Product.Price;
+            dbOrder.CustomerId = 1; // Add logic later
+            dbOrder.ManagerId = 2; // Add logic later
+            dbOrder.TotalCost = createRequest.ProductAmount * _productStoreContext.Items
+                                    .FirstOrDefault(i => i.Product.Id == createRequest.ProductId).Product.Price;
+
             dbOrder.OrderDate = DateTime.UtcNow;
             dbOrder.StatusId = 1; // Don't know how to realize logic
             _orderCatalogueContext.Orders.Add(dbOrder);
