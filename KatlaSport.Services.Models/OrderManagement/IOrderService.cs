@@ -5,7 +5,7 @@ namespace KatlaSport.Services.OrderManagement
 {
     public interface IOrderService
     {
-        Task<List<OrderListItem>> GetOrdersAsync(int start, int amount);
+        Task<List<OrderListItem>> GetOrdersAsync();
 
         Task<Order> CreateOrderAsync(UpdateOrderRequest createRequest);
 

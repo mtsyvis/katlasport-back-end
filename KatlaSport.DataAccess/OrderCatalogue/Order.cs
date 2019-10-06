@@ -35,6 +35,14 @@ namespace KatlaSport.DataAccess.OrderCatalogue
         public DateTime OrderDate { get; set; }
 
         /// <summary>
+        /// Gets or sets the total cost.
+        /// </summary>
+        /// <value>
+        /// The total cost.
+        /// </value>
+        public decimal? TotalCost { get; set; }
+
+        /// <summary>
         /// Gets or sets the description.
         /// </summary>
         /// <value>

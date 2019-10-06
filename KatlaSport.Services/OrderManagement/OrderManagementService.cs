@@ -2,41 +2,65 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
 
+    using AutoMapper;
+
+    using KatlaSport.DataAccess;
     using KatlaSport.DataAccess.CustomerCatalogue;
     using KatlaSport.DataAccess.ManagerCatalogue;
     using KatlaSport.DataAccess.OrderCatalogue;
-    using KatlaSport.DataAccess.ProductStoreHive;
+    using KatlaSport.DataAccess.ProductStore;
 
     public class OrderManagementService : IOrderService
     {
         private readonly IOrderCatalogueContext _orderCatalogueContext;
         private readonly ICustomerContext _customerContext;
         private readonly IManagerContext _managerContext;
-        private readonly IProductStoreHiveContext _productStoreHiveContext;
+        private readonly IProductStoreContext _productStoreContext;
 
-        public OrderManagementService(IOrderCatalogueContext orderCatalogueContext, ICustomerContext customerContext, IManagerContext managerContext, IProductStoreHiveContext productStoreHiveContext)
+        public OrderManagementService(IOrderCatalogueContext orderCatalogueContext, ICustomerContext customerContext, IManagerContext managerContext, IProductStoreContext productStoreContext)
         {
             _orderCatalogueContext =
                 orderCatalogueContext ?? throw new ArgumentNullException(nameof(orderCatalogueContext));
             _customerContext = customerContext ?? throw new ArgumentNullException(nameof(customerContext));
             _managerContext = managerContext ?? throw new ArgumentNullException(nameof(managerContext));
-            _productStoreHiveContext = productStoreHiveContext
-                                            ?? throw new ArgumentNullException(nameof(productStoreHiveContext));
+            _productStoreContext = productStoreContext
+                                            ?? throw new ArgumentNullException(nameof(productStoreContext));
         }
 
-        public Task<List<OrderListItem>> GetOrdersAsync(int start, int amount)
+        public async Task<List<OrderListItem>> GetOrdersAsync()
         {
-            throw new NotImplementedException();
+            var dbOrders = await _orderCatalogueContext.Orders.OrderBy(o => o.Id).ToArrayAsync();
+            var orders = dbOrders.Select(o => Mapper.Map<OrderListItem>(o)).ToList();
+
+            foreach (var order in orders)
+            {
+                order.OrderStatus = _orderCatalogueContext.OrderStatuses.FirstOrDefault(o => o.Id == order.StatusId).Name;
+                order.ProductName = _productStoreContext.Items.FirstOrDefault(i => i.ProductId == order.ProductId).Product.Name;
+            }
+
+            return orders;
         }
 
-        public Task<Order> CreateOrderAsync(UpdateOrderRequest createRequest)
+        public async Task<Order> CreateOrderAsync(UpdateOrderRequest createRequest)
         {
-            throw new NotImplementedException();
+            var dbOrder = Mapper.Map<UpdateOrderRequest, KatlaSport.DataAccess.OrderCatalogue.Order>(createRequest);
+            dbOrder.CustomerId = 1; // Need to change
+            dbOrder.ManagerId = 2; // Need to change
+            dbOrder.TotalCost = dbOrder.ProductAmount * _productStoreContext.Items
+                                    .FirstOrDefault(i => i.Product.Id == dbOrder.ProductId).Product.Price;
+            dbOrder.OrderDate = DateTime.UtcNow;
+            dbOrder.StatusId = 1; // Don't know how to realize logic
+            _orderCatalogueContext.Orders.Add(dbOrder);
+
+            await _orderCatalogueContext.SaveChangesAsync();
+
+            return Mapper.Map<Order>(dbOrder);
         }
 
-        public Task<Order> UpdateOrderAsync(int orderId, UpdateOrderRequest updateRequest)
+        public async Task<Order> UpdateOrderAsync(int orderId, UpdateOrderRequest updateRequest)
         {
             throw new NotImplementedException();
         }

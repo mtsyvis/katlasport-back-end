@@ -21,6 +21,7 @@ namespace KatlaSport.DataAccess.OrderCatalogue
             Property(i => i.StatusId).HasColumnName("order_status_id");
             Property(i => i.ProductId).HasColumnName("order_product_id");
             Property(i => i.ProductAmount).HasColumnName("order_product_amount").IsRequired();
+            Property(i => i.TotalCost).HasColumnName("order_total_cost").IsOptional();
         }
     }
 }

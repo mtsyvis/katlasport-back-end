@@ -81,6 +81,10 @@
     <Compile Include="Migrations\201910052105477_AddOrderProductAmount.Designer.cs">
       <DependentUpon>201910052105477_AddOrderProductAmount.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201910060843483_AddOrderTotalCost.cs" />
+    <Compile Include="Migrations\201910060843483_AddOrderTotalCost.Designer.cs">
+      <DependentUpon>201910060843483_AddOrderTotalCost.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -105,6 +109,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201910052105477_AddOrderProductAmount.resx">
       <DependentUpon>201910052105477_AddOrderProductAmount.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910060843483_AddOrderTotalCost.resx">
+      <DependentUpon>201910060843483_AddOrderTotalCost.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

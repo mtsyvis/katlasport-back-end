@@ -3,7 +3,7 @@
     /// <summary>
     /// Represents a context for order catalogue domain.
     /// </summary>
-    public interface IOrderCatalogueContext
+    public interface IOrderCatalogueContext : IAsyncEntityStorage
     {
         /// <summary>
         /// Gets the orders.
