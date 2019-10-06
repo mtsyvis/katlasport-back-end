@@ -7,13 +7,13 @@ namespace KatlaSport.DataAccess.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class AddOrderTotalCost : IMigrationMetadata
+    public sealed partial class AddEntitiesInFieldOfTrade : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AddOrderTotalCost));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(AddEntitiesInFieldOfTrade));
         
         string IMigrationMetadata.Id
         {
-            get { return "201910060843483_AddOrderTotalCost"; }
+            get { return "201910062041446_AddEntitiesInFieldOfTrade"; }
         }
         
         string IMigrationMetadata.Source
