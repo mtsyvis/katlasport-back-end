@@ -11,7 +11,7 @@ namespace KatlaSport.Services.OrderManagement
 
         Task<Order> UpdateOrderAsync(int orderId, UpdateOrderRequest updateRequest);
 
-        Task SetOrderStatusAsync(int statusId);
+        Task SetOrderStatusAsync(int orderId, int statusId);
 
         Task DeleteOrderAsync(int orderId);
     }

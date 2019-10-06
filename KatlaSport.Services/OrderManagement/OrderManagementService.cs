@@ -38,7 +38,6 @@
             foreach (var order in orders)
             {
                 order.OrderStatus = _orderCatalogueContext.OrderStatuses.FirstOrDefault(o => o.Id == order.StatusId).Name;
-                //order.ProductName = _productStoreContext.Items.FirstOrDefault(i => i.ProductId == order.ProductId).Product.Name;
             }
 
             return orders;
@@ -63,17 +62,50 @@
 
         public async Task<Order> UpdateOrderAsync(int orderId, UpdateOrderRequest updateRequest)
         {
-            throw new NotImplementedException();
+            var dbOrders = await _orderCatalogueContext.Orders.Where(o => o.Id == orderId).ToArrayAsync();
+            if (dbOrders.Length == 0)
+            {
+                throw new RequestedResourceNotFoundException();
+            }
+
+            var dbOrder = dbOrders[0];
+            Mapper.Map(updateRequest, dbOrder);
+
+            dbOrder.TotalCost += RecalculateOrderTotalCost();
+
+            await _orderCatalogueContext.SaveChangesAsync();
+
+            return Mapper.Map<Order>(dbOrder);
+
+            decimal RecalculateOrderTotalCost()
+            {
+                // if (dbOrder.Products.Any(p => p.ItemId == updateRequest.ProductId))
+                // {
+                //
+                // }
+                // _productStoreContext.Items.FirstOrDefault(i => i.ProductId == updateRequest.ProductId)?.Product.Price
+                //     * updateRequest.ProductAmount;
+                return 0;
+            }
         }
 
-        public Task SetOrderStatusAsync(int statusId)
+        public Task SetOrderStatusAsync(int orderId, int statusId)
         {
             throw new NotImplementedException();
         }
 
-        public Task DeleteOrderAsync(int orderId)
+        public async Task DeleteOrderAsync(int orderId)
         {
-            throw new NotImplementedException();
+            var dbOrders = await _orderCatalogueContext.Orders.Where(o => o.Id == orderId).ToArrayAsync();
+            if (dbOrders.Length == 0)
+            {
+                throw new RequestedResourceNotFoundException();
+            }
+
+            var dbOrder = dbOrders[0];
+
+            _orderCatalogueContext.Orders.Remove(dbOrder);
+            await _orderCatalogueContext.SaveChangesAsync();
         }
     }
 }

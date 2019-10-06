@@ -8,7 +8,7 @@ namespace KatlaSport.Services.OrderManagement
     [Validator(typeof(UpdateOrderRequest))]
     public class UpdateOrderRequest
     {
-        public int OrderId { get; set; }
+        public int StatusId { get; set; }
 
         /// <summary>
         /// Gets or sets the product identifier.

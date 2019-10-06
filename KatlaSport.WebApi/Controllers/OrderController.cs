@@ -4,6 +4,7 @@ using System.Web.Http;
 
 namespace KatlaSport.WebApi.Controllers
 {
+    using System.Net.Http;
     using System.Threading.Tasks;
     using System.Web.Http.Cors;
 
@@ -56,6 +57,19 @@ namespace KatlaSport.WebApi.Controllers
             var order = await _orderService.CreateOrderAsync(createRequest);
             var location = $"/api/order/{order.Id}";
             return Created<Order>(location, order);
+        }
+
+        [HttpDelete]
+        [Route("{id:int:min(1)}")]
+        [SwaggerResponse(HttpStatusCode.NoContent, Description = "Deletes an existed order.")]
+        [SwaggerResponse(HttpStatusCode.BadRequest)]
+        [SwaggerResponse(HttpStatusCode.Conflict)]
+        [SwaggerResponse(HttpStatusCode.NotFound)]
+        [SwaggerResponse(HttpStatusCode.InternalServerError)]
+        public async Task<IHttpActionResult> DeleteOrder([FromUri] int id)
+        {
+            await this._orderService.DeleteOrderAsync(id);
+            return ResponseMessage(Request.CreateResponse(HttpStatusCode.NoContent));
         }
     }
 }
