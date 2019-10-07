@@ -52,7 +52,7 @@
                                     .FirstOrDefault(i => i.Product.Id == createRequest.ProductId).Product.Price;
 
             dbOrder.OrderDate = DateTime.UtcNow;
-            dbOrder.StatusId = 1; // Don't know how to realize logic
+            dbOrder.StatusId = 1; // Don't know how to realize logic using enum
             _orderCatalogueContext.Orders.Add(dbOrder);
 
             await _orderCatalogueContext.SaveChangesAsync();

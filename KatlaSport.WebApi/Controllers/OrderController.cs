@@ -59,7 +59,25 @@ namespace KatlaSport.WebApi.Controllers
             return Created<Order>(location, order);
         }
 
-        [HttpDelete]
+        [HttpPut]
+        [Route("{id:int:min(1)}")]
+        [SwaggerResponse(HttpStatusCode.NoContent, Description = "Updates an existed order.")]
+        [SwaggerResponse(HttpStatusCode.BadRequest)]
+        [SwaggerResponse(HttpStatusCode.Conflict)]
+        [SwaggerResponse(HttpStatusCode.NotFound)]
+        [SwaggerResponse(HttpStatusCode.InternalServerError)]
+        public async Task<IHttpActionResult> UpdateOrder([FromUri] int id, [FromBody] UpdateOrderRequest updateRequest)
+        {
+            if (!ModelState.IsValid)
+            {
+                return this.BadRequest(ModelState);
+            }
+
+            await _orderService.UpdateOrderAsync(id, updateRequest);
+            return ResponseMessage(Request.CreateResponse(HttpStatusCode.NoContent));
+        }
+
+            [HttpDelete]
         [Route("{id:int:min(1)}")]
         [SwaggerResponse(HttpStatusCode.NoContent, Description = "Deletes an existed order.")]
         [SwaggerResponse(HttpStatusCode.BadRequest)]
