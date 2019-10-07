@@ -77,6 +77,10 @@
     <Compile Include="Migrations\201910062041446_AddEntitiesInFieldOfTrade.Designer.cs">
       <DependentUpon>201910062041446_AddEntitiesInFieldOfTrade.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201910072018551_AddParentIdPropertyInManagerEntity.cs" />
+    <Compile Include="Migrations\201910072018551_AddParentIdPropertyInManagerEntity.Designer.cs">
+      <DependentUpon>201910072018551_AddParentIdPropertyInManagerEntity.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -98,6 +102,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201910062041446_AddEntitiesInFieldOfTrade.resx">
       <DependentUpon>201910062041446_AddEntitiesInFieldOfTrade.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910072018551_AddParentIdPropertyInManagerEntity.resx">
+      <DependentUpon>201910072018551_AddParentIdPropertyInManagerEntity.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
