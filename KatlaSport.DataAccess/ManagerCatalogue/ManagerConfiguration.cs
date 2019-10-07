@@ -8,6 +8,7 @@ namespace KatlaSport.DataAccess.ManagerCatalogue
         {
             ToTable("managers");
             HasKey(i => i.Id);
+            Property(i => i.ParentId).HasColumnName("manager_parent_id");
             Property(i => i.Id).HasColumnName("manager_id");
             Property(i => i.Name).HasColumnName("manager_name").IsRequired().HasMaxLength(300);
             Property(i => i.Phone).HasColumnName("manager_phone").IsRequired().HasMaxLength(20);
