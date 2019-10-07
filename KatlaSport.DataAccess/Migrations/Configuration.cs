@@ -8,6 +8,9 @@ using KatlaSport.DataAccess.ProductStoreHive;
 
 namespace KatlaSport.DataAccess.Migrations
 {
+    using KatlaSport.DataAccess.ManagerCatalogue;
+    using KatlaSport.DataAccess.OrderCatalogue;
+
     internal sealed class Configuration : DbMigrationsConfiguration<ApplicationDbContext>
     {
         /*
@@ -45,6 +48,7 @@ namespace KatlaSport.DataAccess.Migrations
         {
             var timestamp = DateTime.UtcNow;
             var creatorId = 1;
+            var managerId = 2;
 
             context.ProductCategories.AddOrUpdate(
                 i => i.Id,
@@ -90,7 +94,9 @@ namespace KatlaSport.DataAccess.Migrations
                     IsDeleted = false,
                     CreatedBy = creatorId,
                     LastUpdatedBy = creatorId,
-                    LastUpdated = timestamp
+                    LastUpdated = timestamp,
+                    Price = 20,
+                    Description = "test"
                 },
                 new CatalogueProduct
                 {
@@ -101,7 +107,8 @@ namespace KatlaSport.DataAccess.Migrations
                     IsDeleted = false,
                     CreatedBy = creatorId,
                     LastUpdatedBy = creatorId,
-                    LastUpdated = timestamp
+                    LastUpdated = timestamp,
+                    Price = 100
                 },
                 new CatalogueProduct
                 {
@@ -396,6 +403,53 @@ namespace KatlaSport.DataAccess.Migrations
                     Address = "Brest, Repina-7",
                     Phone = "+37529-9832872"
                 });
+
+            context.Managers.AddOrUpdate(
+                new Manager() { Id = 1, Name = "Vasya", Phone = "+375336666666", },
+                new Manager() { Id = 2, Name = "Misha Tsyvis", Phone = "+375333232690" });
+
+            context.OrderStatuses.AddOrUpdate(
+                new OrderStatus() { Id = 1, Name = "Новый" },
+                new OrderStatus() { Id = 2, Name = "Счет выставлен" },
+                new OrderStatus() { Id = 2, Name = "Отправлен" },
+                new OrderStatus() { Id = 2, Name = "Закрыт" });
+
+            context.Orders.AddOrUpdate(
+                new Order()
+                    {
+                        Id = 1,
+                        CustomerId = 1,
+                        ManagerId = managerId,
+                        OrderDate = timestamp,
+                        //ProductId = 1,
+                        StatusId = 1,
+                        Description = "Good item"
+                    },
+                new Order()
+                    {
+                        Id = 2,
+                        CustomerId = 1,
+                        ManagerId = managerId,
+                        OrderDate = timestamp,
+                        //ProductId = 2,
+                        StatusId = 1
+                    },
+                new Order()
+                    {
+                        Id = 3,
+                        CustomerId = 3,
+                        ManagerId = managerId,
+                        OrderDate = timestamp,
+                        //ProductId = 4,
+                        StatusId = 1
+                    });
+
+            context.OrderProductItems.AddOrUpdate(
+                i => new { i.OrderId, i.ItemId },
+                new OrderProductItem() { OrderId = 1, ItemId = 1, Amount = 1 },
+                new OrderProductItem() { OrderId = 2, ItemId = 2, Amount = 1 },
+                new OrderProductItem() { OrderId = 2, ItemId = 1, Amount = 2 },
+                new OrderProductItem() { OrderId = 3, ItemId = 3, Amount = 2 });
         }
     }
 }

@@ -8,6 +8,9 @@ using KatlaSport.DataAccess.ProductStoreHive;
 
 namespace KatlaSport.DataAccess
 {
+    using KatlaSport.DataAccess.ManagerCatalogue;
+    using KatlaSport.DataAccess.OrderCatalogue;
+
     /// <summary>
     /// Represents an application database context.
     /// </summary>
@@ -68,6 +71,38 @@ namespace KatlaSport.DataAccess
         /// Gets or sets a <see cref="DbSet"/> for <see cref="Customer"/>.
         /// </summary>
         public DbSet<Customer> Customers { get; set; }
+
+        /// <summary>
+        /// Gets or sets the managers.
+        /// </summary>
+        /// <value>
+        /// The managers.
+        /// </value>
+        public DbSet<Manager> Managers { get; set; }
+
+        /// <summary>
+        /// Gets or sets the orders.
+        /// </summary>
+        /// <value>
+        /// The orders.
+        /// </value>
+        public DbSet<Order> Orders { get; set; }
+
+        /// <summary>
+        /// Gets or sets the order statuses.
+        /// </summary>
+        /// <value>
+        /// The order statuses.
+        /// </value>
+        public DbSet<OrderStatus> OrderStatuses { get; set; }
+
+        /// <summary>
+        /// Gets or sets the order product items.
+        /// </summary>
+        /// <value>
+        /// The order product items.
+        /// </value>
+        public DbSet<OrderProductItem> OrderProductItems { get; set; }
 
         /// <summary>
         /// Overrides base method.
