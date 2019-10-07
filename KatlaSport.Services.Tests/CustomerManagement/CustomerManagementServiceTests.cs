@@ -11,7 +11,7 @@ namespace KatlaSport.Services.Tests.CustomerManagement
         [Fact]
         public void Ctor_ContextIsNull_ExceptionThrown()
         {
-            var exception = Assert.Throws<ArgumentNullException>(() => new CustomerManagementService((ICustomerContext)null));
+            var exception = Assert.Throws<ArgumentNullException>(() => new CustomerManagementService((ICustomerContext)null, 2));
 
             Assert.Equal(typeof(ArgumentNullException), exception.GetType());
         }
@@ -21,7 +21,7 @@ namespace KatlaSport.Services.Tests.CustomerManagement
         {
             var context = new Mock<ICustomerContext>();
             context.Setup(c => c.Customers).ReturnsEntitySet(new Customer[0]);
-            var service = new CustomerManagementService(context.Object);
+            var service = new CustomerManagementService(context.Object,2);
 
             var amount = service.GetAmount();
 
@@ -33,7 +33,7 @@ namespace KatlaSport.Services.Tests.CustomerManagement
         {
             var context = new Mock<ICustomerContext>();
             context.Setup(c => c.Customers).ReturnsEntitySet(new[] { new Customer(), new Customer() });
-            var service = new CustomerManagementService(context.Object);
+            var service = new CustomerManagementService(context.Object,2);
 
             var amount = service.GetAmount();
 
@@ -45,7 +45,7 @@ namespace KatlaSport.Services.Tests.CustomerManagement
         {
             var context = new Mock<ICustomerContext>();
             context.Setup(c => c.Customers).ReturnsEntitySet(new Customer[0]);
-            var service = new CustomerManagementService(context.Object);
+            var service = new CustomerManagementService(context.Object,2);
 
             var list = service.GetBriefInfo(0, 0);
 
@@ -66,7 +66,7 @@ namespace KatlaSport.Services.Tests.CustomerManagement
 
             var context = new Mock<ICustomerContext>();
             context.Setup(c => c.Customers).ReturnsEntitySet(new[] { firstCustomer, secondCustomer, new Customer(), new Customer() });
-            var service = new CustomerManagementService(context.Object);
+            var service = new CustomerManagementService(context.Object,2);
 
             var list = service.GetBriefInfo(0, 2);
 
@@ -89,7 +89,7 @@ namespace KatlaSport.Services.Tests.CustomerManagement
 
             var context = new Mock<ICustomerContext>();
             context.Setup(c => c.Customers).ReturnsEntitySet(new[] { new Customer(), new Customer(), thirdCustomer, fourthCustomer });
-            var service = new CustomerManagementService(context.Object);
+            var service = new CustomerManagementService(context.Object,2);
 
             var list = service.GetBriefInfo(2, 2);
 
@@ -102,7 +102,7 @@ namespace KatlaSport.Services.Tests.CustomerManagement
         public void GetFullInfo_NullAsParameter_ExceptionThrown()
         {
             var context = new Mock<ICustomerContext>();
-            var service = new CustomerManagementService(context.Object);
+            var service = new CustomerManagementService(context.Object,2);
 
             Assert.Throws<ArgumentNullException>(() => service.GetFullInfo(null));
         }
@@ -131,7 +131,7 @@ namespace KatlaSport.Services.Tests.CustomerManagement
                 }
             });
 
-            var service = new CustomerManagementService(context.Object);
+            var service = new CustomerManagementService(context.Object,2);
 
             var list = service.GetFullInfo(new[] { 2 });
 
@@ -163,7 +163,7 @@ namespace KatlaSport.Services.Tests.CustomerManagement
                 }
             });
 
-            var service = new CustomerManagementService(context.Object);
+            var service = new CustomerManagementService(context.Object,2);
 
             var list = service.GetFullInfo(new[] { 2, 4 });
 

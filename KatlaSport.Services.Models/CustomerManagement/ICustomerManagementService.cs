@@ -13,9 +13,13 @@ namespace KatlaSport.Services.CustomerManagement
 
         Task<CustomerFullInfo> GetCustomerAsync(int customerId);
 
-        Task<int> GetCustomerAmount();
+        Task<int> GetCustomerAmountAsync();
 
-        Task<CustomerFullInfo> CreateCustomer(UpdateCustomerRequest createRequest);
+        Task<CustomerFullInfo> CreateCustomerAsync(UpdateCustomerRequest createRequest);
+
+        Task<CustomerFullInfo> UpdateCustomerAsync(int customerId, UpdateCustomerRequest updateRequest);
+
+        Task DeleteCustomerAsync(int customerId);
 
         int GetAmount();
 

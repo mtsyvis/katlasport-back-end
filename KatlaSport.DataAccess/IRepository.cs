@@ -4,6 +4,8 @@ using System.Linq.Expressions;
 
 namespace KatlaSport.DataAccess
 {
+    using System.Threading.Tasks;
+
     public interface IRepository<T>
         where T : class
     {
@@ -19,6 +21,6 @@ namespace KatlaSport.DataAccess
 
         IQueryable<T> GetItems();
 
-        void SaveChanges();
+        Task SaveChanges();
     }
 }

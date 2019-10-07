@@ -6,6 +6,11 @@ namespace KatlaSport.Services.CustomerManagement
     public class UpdateCustomerRequest
     {
         /// <summary>
+        /// Gets or sets a customer name.
+        /// </summary>
+        public string Name { get; set; }
+
+        /// <summary>
         /// Gets or sets a customer address.
         /// </summary>
         public string Address { get; set; }

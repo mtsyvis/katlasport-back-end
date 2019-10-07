@@ -3,6 +3,7 @@
     using System;
     using System.Linq;
     using System.Linq.Expressions;
+    using System.Threading.Tasks;
 
     using KatlaSport.DataAccess.CustomerCatalogue;
 
@@ -46,9 +47,9 @@
             return _context.Customers;
         }
 
-        public void SaveChanges()
+        public async Task SaveChanges()
         {
-            _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
         }
     }
 }

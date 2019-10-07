@@ -59,7 +59,7 @@ namespace KatlaSport.Services.CustomerManagement
         }
 
         // Old Implementations
-        public CustomerManagementService(ICustomerContext context = null)
+        public CustomerManagementService(ICustomerContext context, int constructorOverwrite)
         {
             throw new NotImplementedException();
         }
@@ -71,19 +71,61 @@ namespace KatlaSport.Services.CustomerManagement
             return dbCustomers.Select(c => Mapper.Map<CustomerFullInfo>(c)).ToList();
         }
 
-        public Task<CustomerFullInfo> GetCustomerAsync(int customerId)
+        public async Task<CustomerFullInfo> GetCustomerAsync(int customerId)
         {
-            throw new NotImplementedException();
+            var dbCustomers = await _repository.GetItems(i => i.Id == customerId).ToArrayAsync();
+
+            if (dbCustomers.Length == 0)
+            {
+                throw new RequestedResourceNotFoundException();
+            }
+
+            return Mapper.Map<CustomerFullInfo>(dbCustomers[0]);
         }
 
-        public Task<int> GetCustomerAmount()
+        public async Task<int> GetCustomerAmountAsync()
         {
-            throw new NotImplementedException();
+            return await _repository.GetItems().CountAsync();
         }
 
-        public Task<CustomerFullInfo> CreateCustomer(UpdateCustomerRequest createRequest)
+        public async Task<CustomerFullInfo> CreateCustomerAsync(UpdateCustomerRequest createRequest)
         {
-            throw new NotImplementedException();
+            var dbCustomer = Mapper.Map<UpdateCustomerRequest, Customer>(createRequest);
+            _repository.Add(dbCustomer);
+            await _repository.SaveChanges();
+
+            return Mapper.Map<CustomerFullInfo>(dbCustomer);
+        }
+
+        public async Task<CustomerFullInfo> UpdateCustomerAsync(int customerId, UpdateCustomerRequest updateRequest)
+        {
+            var dbCustomers = await _repository.GetItems(i => i.Id == customerId).ToArrayAsync();
+
+            if (dbCustomers.Length == 0)
+            {
+                throw new RequestedResourceNotFoundException();
+            }
+
+            var dbCustomer = dbCustomers[0];
+
+            Mapper.Map(updateRequest, dbCustomer);
+            _repository.Update(dbCustomer);
+            await _repository.SaveChanges();
+
+            return Mapper.Map<CustomerFullInfo>(dbCustomer);
+        }
+
+        public async Task DeleteCustomerAsync(int customerId)
+        {
+            var dbCustomers = await _repository.GetItems(i => i.Id == customerId).ToArrayAsync();
+
+            if (dbCustomers.Length == 0)
+            {
+                throw new RequestedResourceNotFoundException();
+            }
+
+            _repository.Delete(dbCustomers[0]);
+            await _repository.SaveChanges();
         }
 
         // Old Implementations
