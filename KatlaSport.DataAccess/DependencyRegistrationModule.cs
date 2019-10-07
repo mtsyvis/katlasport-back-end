@@ -2,6 +2,8 @@
 
 namespace KatlaSport.DataAccess
 {
+    using KatlaSport.DataAccess.CustomerCatalogue;
+
     /// <summary>
     /// Represents an assembly dependency registration <see cref="Module"/>.
     /// </summary>
@@ -18,6 +20,8 @@ namespace KatlaSport.DataAccess
             builder.RegisterType<OrderCatalogue.OrderCatalogueContext>().As<OrderCatalogue.IOrderCatalogueContext>().InstancePerRequest();
             builder.RegisterType<ManagerCatalogue.ManagerContext>().As<ManagerCatalogue.IManagerContext>()
                 .InstancePerRequest();
+
+            builder.RegisterType<Repositories.CustomerRepository>().As<IRepository<Customer>>().InstancePerRequest();
         }
     }
 }

@@ -11,7 +11,7 @@ namespace KatlaSport.Services.Tests.CustomerManagement
         [Fact]
         public void Ctor_ContextIsNull_ExceptionThrown()
         {
-            var exception = Assert.Throws<ArgumentNullException>(() => new CustomerManagementService(null));
+            var exception = Assert.Throws<ArgumentNullException>(() => new CustomerManagementService((ICustomerContext)null));
 
             Assert.Equal(typeof(ArgumentNullException), exception.GetType());
         }
