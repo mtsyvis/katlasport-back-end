@@ -43,13 +43,60 @@
             return orders;
         }
 
+        public async Task<List<OrderListItem>> GetOrdersByCustomerAsync(int customerId)
+        {
+            var dbOrders = await _orderCatalogueContext.Orders.Where(o => o.CustomerId == customerId).OrderBy(o => o.Id).ToArrayAsync();
+            var orders = dbOrders.Select(o => Mapper.Map<OrderListItem>(o)).ToList();
+
+            foreach (var order in orders)
+            {
+                order.OrderStatus = _orderCatalogueContext.OrderStatuses.FirstOrDefault(o => o.Id == order.StatusId).Name;
+            }
+
+            return orders;
+        }
+
+        public async Task<List<OrderProductListItem>> GetProductsInfo(int orderId)
+        {
+            var dbOrders = await _orderCatalogueContext.Orders.Where(o => o.Id == orderId).ToArrayAsync();
+
+            if (dbOrders.Length == 0)
+            {
+                throw new RequestedResourceNotFoundException();
+            }
+
+            var dbOrder = dbOrders[0];
+            var orderProductsList = dbOrder.Products.Select(
+                i => new OrderProductListItem()
+                         {
+                             ItemId = i.ItemId, Amount = i.Amount, ProductName = i.Item.Product.Name, ProductPrice = i.Item.Product.Price
+                         });
+
+            return orderProductsList.ToList();
+        }
+
+        public async Task<OrderListItem> GetOrderAsync(int orderId)
+        {
+            var dbOrders = await _orderCatalogueContext.Orders.Where(o => o.Id == orderId).ToArrayAsync();
+
+            if (dbOrders.Length == 0)
+            {
+                throw new RequestedResourceNotFoundException();
+            }
+
+            return Mapper.Map<OrderListItem>(dbOrders[0]);
+        }
+
         public async Task<Order> CreateOrderAsync(UpdateOrderRequest createRequest)
         {
             var dbOrder = Mapper.Map<UpdateOrderRequest, KatlaSport.DataAccess.OrderCatalogue.Order>(createRequest);
-            dbOrder.CustomerId = 1; // Add logic later
             dbOrder.ManagerId = 2; // Add logic later
-            dbOrder.TotalCost = createRequest.ProductAmount * _productStoreContext.Items
-                                    .FirstOrDefault(i => i.Product.Id == createRequest.ProductId).Product.Price;
+
+            var productItem = _productStoreContext.Items.FirstOrDefault(i => i.ProductId == createRequest.ProductId);
+            dbOrder.TotalCost = createRequest.ProductAmount * productItem.Product.Price;
+
+            _orderCatalogueContext.OrderProductItems.Add(
+                new OrderProductItem() { Amount = createRequest.ProductAmount, ItemId = createRequest.ProductId });
 
             dbOrder.OrderDate = DateTime.UtcNow;
             dbOrder.StatusId = 1; // Don't know how to realize logic using enum
@@ -105,6 +152,28 @@
             var dbOrder = dbOrders[0];
 
             _orderCatalogueContext.Orders.Remove(dbOrder);
+            await _orderCatalogueContext.SaveChangesAsync();
+        }
+
+        public async Task AddProductToOrder(int orderId, OrderProductListItem productListItem)
+        {
+            var dbOrders = await _orderCatalogueContext.Orders.Where(o => o.Id == orderId).ToArrayAsync();
+            if (dbOrders.Length == 0)
+            {
+                throw new RequestedResourceNotFoundException();
+            }
+
+            var dbOrderProduct = Mapper.Map<OrderProductListItem, OrderProductItem>(productListItem);
+            var catalogueProductItem = _productStoreContext.Items.FirstOrDefault(i => i.ProductId == productListItem.ItemId);
+            dbOrderProduct.OrderId = orderId;
+            dbOrderProduct.Item = catalogueProductItem;
+
+            _orderCatalogueContext.OrderProductItems.Add(dbOrderProduct);
+
+            var dbOrder = dbOrders[0];
+            var productItem = _productStoreContext.Items.FirstOrDefault(i => i.ProductId == dbOrderProduct.Item.ProductId);
+            dbOrder.TotalCost += dbOrderProduct.Amount * productItem.Product?.Price;
+
             await _orderCatalogueContext.SaveChangesAsync();
         }
     }

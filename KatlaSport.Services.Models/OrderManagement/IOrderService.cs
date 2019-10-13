@@ -7,6 +7,12 @@ namespace KatlaSport.Services.OrderManagement
     {
         Task<List<OrderListItem>> GetOrdersAsync();
 
+        Task<List<OrderListItem>> GetOrdersByCustomerAsync(int customerId);
+
+        Task<List<OrderProductListItem>> GetProductsInfo(int orderId);
+
+        Task<OrderListItem> GetOrderAsync(int orderId);
+
         Task<Order> CreateOrderAsync(UpdateOrderRequest createRequest);
 
         Task<Order> UpdateOrderAsync(int orderId, UpdateOrderRequest updateRequest);
@@ -14,5 +20,7 @@ namespace KatlaSport.Services.OrderManagement
         Task SetOrderStatusAsync(int orderId, int statusId);
 
         Task DeleteOrderAsync(int orderId);
+
+        Task AddProductToOrder(int orderId, OrderProductListItem productListItem);
     }
 }

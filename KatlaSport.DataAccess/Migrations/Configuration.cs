@@ -119,7 +119,8 @@ namespace KatlaSport.DataAccess.Migrations
                     IsDeleted = false,
                     CreatedBy = creatorId,
                     LastUpdatedBy = creatorId,
-                    LastUpdated = timestamp
+                    LastUpdated = timestamp,
+                    Price = 3
                 },
                 new CatalogueProduct
                 {
@@ -130,7 +131,8 @@ namespace KatlaSport.DataAccess.Migrations
                     IsDeleted = false,
                     CreatedBy = creatorId,
                     LastUpdatedBy = creatorId,
-                    LastUpdated = timestamp
+                    LastUpdated = timestamp,
+                    Price = 4
                 });
 
             context.StoreHives.AddOrUpdate(

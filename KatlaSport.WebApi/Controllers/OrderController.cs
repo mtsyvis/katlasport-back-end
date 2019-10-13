@@ -41,6 +41,42 @@ namespace KatlaSport.WebApi.Controllers
             return this.Ok(orders);
         }
 
+        [HttpGet]
+        [Route("orderId:int:min(1)")]
+        [SwaggerResponse(HttpStatusCode.OK, Description = "Returns a list of order.", Type = typeof(OrderListItem))]
+        [SwaggerResponse(HttpStatusCode.BadRequest)]
+        [SwaggerResponse(HttpStatusCode.InternalServerError)]
+        public async Task<IHttpActionResult> GetOrder([FromUri] int orderId)
+        {
+            var order = await _orderService.GetOrderAsync(orderId);
+
+            return this.Ok(order);
+        }
+
+        [HttpGet]
+        [Route("{customerId:int:min(1)}/orders")]
+        [SwaggerResponse(HttpStatusCode.OK, Description = "Returns a list of orders by customer.", Type = typeof(OrderListItem[]))]
+        [SwaggerResponse(HttpStatusCode.BadRequest)]
+        [SwaggerResponse(HttpStatusCode.InternalServerError)]
+        public async Task<IHttpActionResult> GetOrdersByCustomer([FromUri] int customerId)
+        {
+            var orders = await _orderService.GetOrdersByCustomerAsync(customerId);
+
+            return Ok(orders);
+        }
+
+        [HttpGet]
+        [Route("{orderId:int:min(1)}/products")]
+        [SwaggerResponse(HttpStatusCode.OK, Description = "Returns a list of products info.", Type = typeof(OrderProductListItem[]))]
+        [SwaggerResponse(HttpStatusCode.BadRequest)]
+        [SwaggerResponse(HttpStatusCode.InternalServerError)]
+        public async Task<IHttpActionResult> GetProductsInfo([FromUri] int orderId)
+        {
+            var productsInfo = await _orderService.GetProductsInfo(orderId);
+
+            return Ok(productsInfo);
+        }
+
         [HttpPost]
         [Route("")]
         [SwaggerResponse(HttpStatusCode.Created, Description = "Creates a new order.")]
@@ -59,25 +95,25 @@ namespace KatlaSport.WebApi.Controllers
             return Created<Order>(location, order);
         }
 
-        [HttpPut]
-        [Route("{id:int:min(1)}")]
-        [SwaggerResponse(HttpStatusCode.NoContent, Description = "Updates an existed order.")]
-        [SwaggerResponse(HttpStatusCode.BadRequest)]
-        [SwaggerResponse(HttpStatusCode.Conflict)]
-        [SwaggerResponse(HttpStatusCode.NotFound)]
-        [SwaggerResponse(HttpStatusCode.InternalServerError)]
-        public async Task<IHttpActionResult> UpdateOrder([FromUri] int id, [FromBody] UpdateOrderRequest updateRequest)
-        {
-            if (!ModelState.IsValid)
-            {
-                return this.BadRequest(ModelState);
-            }
+        // [HttpPut]
+        // [Route("{id:int:min(1)}")]
+        // [SwaggerResponse(HttpStatusCode.NoContent, Description = "Updates an existed order.")]
+        // [SwaggerResponse(HttpStatusCode.BadRequest)]
+        // [SwaggerResponse(HttpStatusCode.Conflict)]
+        // [SwaggerResponse(HttpStatusCode.NotFound)]
+        // [SwaggerResponse(HttpStatusCode.InternalServerError)]
+        // public async Task<IHttpActionResult> UpdateOrder([FromUri] int id, [FromBody] UpdateOrderRequest updateRequest)
+        // {
+        //     if (!ModelState.IsValid)
+        //     {
+        //         return this.BadRequest(ModelState);
+        //     }
+        //
+        //     await _orderService.UpdateOrderAsync(id, updateRequest);
+        //     return ResponseMessage(Request.CreateResponse(HttpStatusCode.NoContent));
+        // }
 
-            await _orderService.UpdateOrderAsync(id, updateRequest);
-            return ResponseMessage(Request.CreateResponse(HttpStatusCode.NoContent));
-        }
-
-            [HttpDelete]
+        [HttpDelete]
         [Route("{id:int:min(1)}")]
         [SwaggerResponse(HttpStatusCode.NoContent, Description = "Deletes an existed order.")]
         [SwaggerResponse(HttpStatusCode.BadRequest)]
@@ -87,6 +123,19 @@ namespace KatlaSport.WebApi.Controllers
         public async Task<IHttpActionResult> DeleteOrder([FromUri] int id)
         {
             await this._orderService.DeleteOrderAsync(id);
+            return ResponseMessage(Request.CreateResponse(HttpStatusCode.NoContent));
+        }
+
+        [HttpPut]
+        [Route("{id:int:min(1)}")]
+        [SwaggerResponse(HttpStatusCode.NoContent, Description = "Adding a product to existed order.")]
+        [SwaggerResponse(HttpStatusCode.BadRequest)]
+        [SwaggerResponse(HttpStatusCode.Conflict)]
+        [SwaggerResponse(HttpStatusCode.NotFound)]
+        [SwaggerResponse(HttpStatusCode.InternalServerError)]
+        public async Task<IHttpActionResult> AddProductToOrder([FromUri] int id, [FromBody] OrderProductListItem orderProduct)
+        {
+            await _orderService.AddProductToOrder(id, orderProduct);
             return ResponseMessage(Request.CreateResponse(HttpStatusCode.NoContent));
         }
     }
