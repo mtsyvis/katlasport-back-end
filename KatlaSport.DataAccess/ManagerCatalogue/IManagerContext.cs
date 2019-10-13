@@ -3,7 +3,7 @@
     /// <summary>
     /// Represents a context for manager domain.
     /// </summary>
-    public interface IManagerContext
+    public interface IManagerContext : IAsyncEntityStorage
     {
         /// <summary>
         /// Gets the managers.

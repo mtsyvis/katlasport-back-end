@@ -1,5 +1,8 @@
 ﻿namespace KatlaSport.Services.ManagerControl
 {
+    /// <summary>
+    /// Represents a manager.
+    /// </summary>
     public class Manager
     {
         /// <summary>
@@ -25,5 +28,18 @@
         /// The phone.
         /// </value>
         public string Phone { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether a product category is deleted.
+        /// </summary>
+        public bool IsDeleted { get; set; }
+
+        /// <summary>
+        /// Gets or sets the photo URL.
+        /// </summary>
+        /// <value>
+        /// The photo URL.
+        /// </value>
+        public string PhotoUrl { get; set; }
     }
 }
