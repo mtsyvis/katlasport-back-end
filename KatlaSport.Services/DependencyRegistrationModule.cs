@@ -22,6 +22,7 @@ namespace KatlaSport.Services
 
             builder.RegisterType<CustomerManagement.CustomerManagementService>()
                 .As<CustomerManagement.ICustomerManagementService>();
+            builder.RegisterType<ManagerControl.ManagerControlService>().As<ManagerControl.IManagerService>();
         }
     }
 }

@@ -12,6 +12,8 @@ namespace KatlaSport.DataAccess.ManagerCatalogue
             Property(i => i.Id).HasColumnName("manager_id");
             Property(i => i.Name).HasColumnName("manager_name").IsRequired().HasMaxLength(300);
             Property(i => i.Phone).HasColumnName("manager_phone").IsRequired().HasMaxLength(20);
+            Property(i => i.IsDeleted).HasColumnName("deleted").IsRequired();
+            Property(i => i.PhotoUrl).HasColumnName("manager_photo_url").IsOptional();
         }
     }
 }

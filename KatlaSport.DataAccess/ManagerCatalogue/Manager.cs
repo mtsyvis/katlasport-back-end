@@ -41,6 +41,19 @@ namespace KatlaSport.DataAccess.ManagerCatalogue
         public string Phone { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether a product is deleted.
+        /// </summary>
+        public bool IsDeleted { get; set; }
+
+        /// <summary>
+        /// Gets or sets the photo URL.
+        /// </summary>
+        /// <value>
+        /// The photo URL.
+        /// </value>
+        public string PhotoUrl { get; set; }
+
+        /// <summary>
         /// Gets or sets the orders.
         /// </summary>
         /// <value>
