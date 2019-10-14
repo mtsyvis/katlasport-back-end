@@ -3,6 +3,8 @@ using System.Threading.Tasks;
 
 namespace KatlaSport.Services.ManagerControl
 {
+    using System.IO;
+
     /// <summary>
     /// Represents a manager service.
     /// </summary>
@@ -41,7 +43,7 @@ namespace KatlaSport.Services.ManagerControl
         /// <summary>
         /// Deletes the manager asynchronous.
         /// </summary>
-        /// <param name="customerId">The customer identifier.</param>
+        /// <param name="managerId">The customer identifier.</param>
         /// <returns>A <see cref="Task"/></returns>
         Task DeleteManagerAsync(int managerId);
 
@@ -52,5 +54,14 @@ namespace KatlaSport.Services.ManagerControl
         /// <param name="deletedStatus">if set to <c>true</c> [deleted status].</param>
         /// <returns>A <see cref="Task"/></returns>
         Task SetStatusAsync(int managerId, bool deletedStatus);
+
+        /// <summary>
+        /// Uploads the file image.
+        /// </summary>
+        /// <param name="managerId">The manager identifier.</param>
+        /// <param name="fileName">Name of the file.</param>
+        /// <param name="fileStream">The file stream.</param>
+        /// <returns>A <see cref="Task"/></returns>
+        Task<bool> UploadFileImage(int managerId, string fileName, Stream fileStream);
     }
 }

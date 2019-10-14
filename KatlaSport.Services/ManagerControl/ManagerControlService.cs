@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -9,10 +10,24 @@
 
     using KatlaSport.DataAccess;
     using KatlaSport.DataAccess.ManagerCatalogue;
+
+    using Microsoft.WindowsAzure.Storage;
+    using Microsoft.WindowsAzure.Storage.Auth;
+    using Microsoft.WindowsAzure.Storage.Blob;
+
     using DbManager = KatlaSport.DataAccess.ManagerCatalogue.Manager;
 
     public class ManagerControlService : IManagerService
     {
+        private const string StorageName = "katlasportmanagers";
+
+        private const string StorageKeyValue =
+            "iocKrNEe9szfQH+QWW6ykZVPuMAlMjCKkbalh/XTGOcOwv9wDuOrbFyxRfCqpVRP+hXD/YIKe52wk5ZV+2dIlg==";
+
+        private const string ContainerName = "managerimage";
+
+        private readonly string _imagePrefix = $"https://{StorageName}.blob.core.windows.net/{ContainerName}/";
+
         private readonly IManagerContext _context;
 
         public ManagerControlService(IManagerContext context)
@@ -99,6 +114,31 @@
                 dbManager.IsDeleted = deletedStatus;
                 await _context.SaveChangesAsync();
             }
+        }
+
+        public async Task<bool> UploadFileImage(int managerId, string fileName, Stream fileStream)
+        {
+            var dbManagers = await _context.Managers.Where(p => managerId == p.Id).ToArrayAsync();
+
+            if (dbManagers.Length == 0)
+            {
+                throw new RequestedResourceNotFoundException();
+            }
+
+            StorageCredentials storageCredentials = new StorageCredentials(StorageName, StorageKeyValue);
+            CloudStorageAccount storageAccount = new CloudStorageAccount(storageCredentials, true);
+            CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
+            CloudBlobContainer container = blobClient.GetContainerReference(ContainerName);
+            CloudBlockBlob blockBlob = container.GetBlockBlobReference(fileName);
+
+            await blockBlob.UploadFromStreamAsync(fileStream);
+
+            var dbManager = dbManagers[0];
+            dbManager.PhotoUrl = _imagePrefix + fileName;
+
+            await _context.SaveChangesAsync();
+
+            return await Task.FromResult(true);
         }
     }
 }

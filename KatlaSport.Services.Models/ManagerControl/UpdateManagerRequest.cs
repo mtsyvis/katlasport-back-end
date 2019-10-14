@@ -22,8 +22,11 @@ namespace KatlaSport.Services.ManagerControl
         public string Phone { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether a product category is deleted.
+        /// Gets or sets the photo URL.
         /// </summary>
-        public bool IsDeleted { get; set; }
+        /// <value>
+        /// The photo URL.
+        /// </value>
+        public string PhotoUrl { get; set; }
     }
 }
