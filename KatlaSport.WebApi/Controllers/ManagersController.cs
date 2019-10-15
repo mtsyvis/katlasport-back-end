@@ -57,10 +57,10 @@ namespace KatlaSport.WebApi.Controllers
         [SwaggerResponse(HttpStatusCode.OK, Description = "Returns a manager.", Type = typeof(Manager))]
         [SwaggerResponse(HttpStatusCode.NotFound)]
         [SwaggerResponse(HttpStatusCode.InternalServerError)]
-        public async Task<IHttpActionResult> GetProduct([FromUri] int id)
+        public async Task<IHttpActionResult> GetManager([FromUri] int id)
         {
-            var product = await _managerService.GetManagerAsync(id);
-            return Ok(product);
+            var manager = await _managerService.GetManagerAsync(id);
+            return Ok(manager);
         }
 
         [HttpPost]
@@ -69,16 +69,16 @@ namespace KatlaSport.WebApi.Controllers
         [SwaggerResponse(HttpStatusCode.BadRequest)]
         [SwaggerResponse(HttpStatusCode.Conflict)]
         [SwaggerResponse(HttpStatusCode.InternalServerError)]
-        public async Task<IHttpActionResult> AddProduct([FromBody] UpdateManagerRequest createRequest)
+        public async Task<IHttpActionResult> AddManager([FromBody] UpdateManagerRequest createRequest)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var product = await this._managerService.CreateManagerAsync(createRequest);
-            var location = string.Format("/api/products/{0}", product.Id);
-            return Created<Manager>(location, product);
+            var manager = await this._managerService.CreateManagerAsync(createRequest);
+            var location = string.Format("/api/products/{0}", manager.Id);
+            return Created<Manager>(location, manager);
         }
 
         [HttpPut]
@@ -88,7 +88,7 @@ namespace KatlaSport.WebApi.Controllers
         [SwaggerResponse(HttpStatusCode.Conflict)]
         [SwaggerResponse(HttpStatusCode.NotFound)]
         [SwaggerResponse(HttpStatusCode.InternalServerError)]
-        public async Task<IHttpActionResult> UpdateProduct([FromUri] int id, [FromBody] UpdateManagerRequest updateRequest)
+        public async Task<IHttpActionResult> UpdateManager([FromUri] int id, [FromBody] UpdateManagerRequest updateRequest)
         {
             if (!ModelState.IsValid)
             {
@@ -106,7 +106,7 @@ namespace KatlaSport.WebApi.Controllers
         [SwaggerResponse(HttpStatusCode.Conflict)]
         [SwaggerResponse(HttpStatusCode.NotFound)]
         [SwaggerResponse(HttpStatusCode.InternalServerError)]
-        public async Task<IHttpActionResult> DeleteProduct([FromUri] int id)
+        public async Task<IHttpActionResult> DeleteManager([FromUri] int id)
         {
             await this._managerService.DeleteManagerAsync(id);
             return ResponseMessage(Request.CreateResponse(HttpStatusCode.NoContent));
@@ -146,6 +146,17 @@ namespace KatlaSport.WebApi.Controllers
             await _managerService.UploadFileImage(managerId, imageName, postedFile.InputStream);
 
             return ResponseMessage(Request.CreateResponse(HttpStatusCode.NoContent));
+        }
+
+        [HttpGet]
+        [Route("{id:int:min(1)}/subordinates")]
+        [SwaggerResponse(HttpStatusCode.OK, Description = "Returns manager's subordinates.", Type = typeof(Manager[]))]
+        [SwaggerResponse(HttpStatusCode.NotFound)]
+        [SwaggerResponse(HttpStatusCode.InternalServerError)]
+        public async Task<IHttpActionResult> GetManagerSubordinates([FromUri] int id)
+        {
+            var subordinates = await _managerService.GetSubordinates(id);
+            return Ok(subordinates);
         }
     }
 }

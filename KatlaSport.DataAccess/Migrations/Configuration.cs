@@ -408,7 +408,7 @@ namespace KatlaSport.DataAccess.Migrations
 
             context.Managers.AddOrUpdate(
                 new Manager() { Id = 1, Name = "Vasya", Phone = "+375336666666", },
-                new Manager() { Id = 2, Name = "Misha Tsyvis", Phone = "+375333232690" });
+                new Manager() { Id = 2, ParentId = 1, Name = "Misha Tsyvis", Phone = "+375333232690" });
 
             context.OrderStatuses.AddOrUpdate(
                 new OrderStatus() { Id = 1, Name = "Новый" },

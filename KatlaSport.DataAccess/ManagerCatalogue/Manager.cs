@@ -60,5 +60,21 @@ namespace KatlaSport.DataAccess.ManagerCatalogue
         /// The orders.
         /// </value>
         public virtual ICollection<Order> Orders { get; set; }
+
+        /// <summary>
+        /// Gets or sets the bos manager.
+        /// </summary>
+        /// <value>
+        /// The bos manager.
+        /// </value>
+        public virtual Manager BosManager { get; set; }
+
+        /// <summary>
+        /// Gets or sets the subordinates.
+        /// </summary>
+        /// <value>
+        /// The subordinates.
+        /// </value>
+        public virtual ICollection<Manager> Subordinates { get; set; }
     }
 }

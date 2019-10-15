@@ -85,6 +85,10 @@
     <Compile Include="Migrations\201910131906519_AddPhotoUrlPropertyToManagerEntite.Designer.cs">
       <DependentUpon>201910131906519_AddPhotoUrlPropertyToManagerEntite.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201910141941562_AddRelationsInManagerEntity.cs" />
+    <Compile Include="Migrations\201910141941562_AddRelationsInManagerEntity.Designer.cs">
+      <DependentUpon>201910141941562_AddRelationsInManagerEntity.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -112,6 +116,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201910131906519_AddPhotoUrlPropertyToManagerEntite.resx">
       <DependentUpon>201910131906519_AddPhotoUrlPropertyToManagerEntite.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910141941562_AddRelationsInManagerEntity.resx">
+      <DependentUpon>201910141941562_AddRelationsInManagerEntity.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

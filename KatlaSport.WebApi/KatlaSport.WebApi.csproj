@@ -204,6 +204,7 @@
     <Compile Include="Controllers\CustomersController.cs" />
     <Compile Include="Controllers\HivesController.cs" />
     <Compile Include="Controllers\HiveSectionsController.cs" />
+    <Compile Include="Controllers\ManagersController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\ProductCategoriesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />

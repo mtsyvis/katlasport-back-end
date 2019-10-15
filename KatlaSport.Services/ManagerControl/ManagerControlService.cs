@@ -140,5 +140,19 @@
 
             return await Task.FromResult(true);
         }
+
+        public async Task<List<Manager>> GetSubordinates(int managerId)
+        {
+            var dbManagers = await _context.Managers.Where(p => managerId == p.Id).ToArrayAsync();
+
+            if (dbManagers.Length == 0)
+            {
+                throw new RequestedResourceNotFoundException();
+            }
+
+            var subordinates = dbManagers[0].Subordinates.Select(s => Mapper.Map<Manager>(s)).ToList();
+
+            return subordinates;
+        }
     }
 }

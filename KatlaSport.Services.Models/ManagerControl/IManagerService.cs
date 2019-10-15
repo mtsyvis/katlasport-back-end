@@ -63,5 +63,12 @@ namespace KatlaSport.Services.ManagerControl
         /// <param name="fileStream">The file stream.</param>
         /// <returns>A <see cref="Task"/></returns>
         Task<bool> UploadFileImage(int managerId, string fileName, Stream fileStream);
+
+        /// <summary>
+        /// Gets the subordinates.
+        /// </summary>
+        /// <param name="managerId">The manager identifier.</param>
+        /// <returns>A <see cref="Task{List{Manager}}"</returns>
+        Task<List<Manager>> GetSubordinates(int managerId);
     }
 }
